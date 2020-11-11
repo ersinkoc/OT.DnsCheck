@@ -1,0 +1,75 @@
+[
+  {
+    "Name": "Google",
+    "SearchPhrases": [
+      {
+        "Phrase": "aspmx.l.google.com",
+        "FindAt": 0
+      },
+      {
+        "Phrase": "alt1.aspmx.l.google.com",
+        "FindAt": 0
+      },
+      {
+        "Phrase": "alt2.aspmx.l.google.com",
+        "FindAt": 0
+      },
+      {
+        "Phrase": "alt3.aspmx.l.google.com",
+        "FindAt": 0
+      },
+      {
+        "Phrase": "alt4.aspmx.l.google.com",
+        "FindAt": 0
+      },
+      {
+        "Phrase": ".l.google.com",
+        "FindAt": 3
+      }
+    ]
+  },
+  {
+    "Name": "BizimHost",
+    "SearchPhrases": [
+      {
+        "Phrase": ".bizimdns.com",
+        "FindAt": 3
+      },
+      {
+        "Phrase": ".bizimhost.com.tr",
+        "FindAt": 3
+      }
+    ]
+  },
+  {
+    "Name": "Yandex",
+    "SearchPhrases": [
+      {
+        "Phrase": "mx.yandex.net",
+        "FindAt": 0
+      }
+    ]
+  },
+  {
+    "Name": "Office365",
+    "SearchPhrases": [
+      {
+        "Phrase": ".protection.outlook.com",
+        "FindAt": 3
+      },
+      {
+        "Phrase": ".outlook.com",
+        "FindAt": 3
+      }
+    ]
+  },
+  {
+    "Name": "Zoho",
+    "SearchPhrases": [
+      {
+        "Phrase": ".zoho.com",
+        "FindAt": 3
+      }
+    ]
+  }
+]

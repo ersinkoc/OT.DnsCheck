@@ -10,32 +10,36 @@ namespace DnsCheck
 {
     public static class Helpers
     {
-        public static void ListProviders(Dictionary<string, string> a, String[] b) {
+        public static void ListProviders(Dictionary<string, string> a, List<Provider> provider)
+        {
+            Console.WriteLine(provider.Count +" provider");
+            Console.WriteLine(a.Count + " domain(s)");
 
-            var x = a;
-            var y = b;
+
             if (a.Count > 0)
             {
-                for (int ii = 0; ii < b.Length; ii++)
-                {
-                    bool firstForTitle = false;
-                    foreach (var item in from item in a
-                                         where item.Value == b[ii]
-                                         select item)
+                    foreach (Provider p in provider)
                     {
-                        if (firstForTitle == false)
+                        bool firstForTitle = false;
+                        foreach (var item in from item in a
+                                             where item.Value == p.Name
+                                             select item)
                         {
-                            Console.WriteLine();
-                            Console.ForegroundColor = ConsoleColor.Cyan;
-                            Console.Write(b[ii] + "\n");
-                            Console.ResetColor();
-                            Console.ForegroundColor = ConsoleColor.White;
-                            firstForTitle = true;
+                            if (firstForTitle == false)
+                            {
+                                Console.WriteLine();
+                                Console.ForegroundColor = ConsoleColor.Cyan;
+                                Console.Write(p.Name + "\n");
+                                Console.ResetColor();
+                                Console.ForegroundColor = ConsoleColor.White;
+                                firstForTitle = true;
+                            }
+                            Console.WriteLine(item.Key);
                         }
-                        Console.WriteLine(item.Key);
+                        Console.ResetColor();
                     }
-                    Console.ResetColor();
-                }
+
+
             }
 
         }

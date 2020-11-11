@@ -16,13 +16,10 @@ namespace DnsCheck
         private static void Main(string[] args)
         {
             Console.Clear();
-            string[] MailServers = { "Google", "Yandex", "Zoho", "Office365", };
-            String[] MxForMailServers = { ".l.google.com", "mx.yandex.net", ".zoho.com", ".protection.outlook.com" };
+            SetProviders.DNS();
+            SetProviders.Mail();
 
-            string[] DNSProviders = { "Google", "GoogleDomains", "Yandex", "Cloudflare", "Azure", "BizimDNS", "UltraDNS", "DomainControl", "NsOne", "HostGator", "BlueHost", "AWS" };
-            String[] NSForProviders = { ".google.com", ".googledomains.com", ".yandex.net", ".cloudflare.com", ".azure-dns.com", ".bizimdns.com", ".ultradns.net", ".domaincontrol.com", ".nsone.net", ".hostgator.com", ".bluehost.com", ".awsdns.com" };
-
-
+            Console.WriteLine("DNS Providers: " + SetProviders.dnsProviders.Count + " Mail Providers: " + SetProviders.mailProviders.Count);
 
             int FreeCheckLimit = 5;
             int MaxCheckLimit = 1000;
@@ -415,13 +412,13 @@ namespace DnsCheck
                             {
                                 if (CheckFor == "mx")
                                 {
-                                    ReturnJsonMX returnJsonMX = new ReturnJsonMX();
-                                    returnJsonMX = JsonConvert.DeserializeObject<ReturnJsonMX>(response.Content);
+                                    ReturnJsonMX rJson = new ReturnJsonMX();
+                                    rJson = JsonConvert.DeserializeObject<ReturnJsonMX>(response.Content);
 
-                                    if (returnJsonMX.Warnings.Count > 0)
+                                    if (rJson.Warnings.Count > 0)
                                     {
                                         var warnings = "";
-                                        foreach (string ii in returnJsonMX.Warnings)
+                                        foreach (string ii in rJson.Warnings)
                                         {
                                             warnings += ii.ToString();
                                             switch (ii)
@@ -456,9 +453,9 @@ namespace DnsCheck
 
                                     Console.ResetColor();
 
-                                    foreach (var item in returnJsonMX.Results)
+                                    foreach (var item in rJson.Results)
                                     {
-                                        if (item.Exchange == returnJsonMX.Domain || item.Exchange.EndsWith("." + returnJsonMX.Domain))
+                                        if (item.Exchange == rJson.Domain || item.Exchange.EndsWith("." + rJson.Domain))
                                         {
                                             Console.Write("[L]");
                                             if (domainscreen)
@@ -484,12 +481,43 @@ namespace DnsCheck
                                             Console.Write($"] {domainstr} : {item.Exchange} ({item.Reference})" + "\n");
                                             domainscreen = true;
 
-                                            for (int ii = 0; ii < MailServers.Length; ii++)
+                                            foreach (var mailProvider in SetProviders.mailProviders)
                                             {
-                                                if (item.Exchange.EndsWith(MxForMailServers[ii]))
+                                                foreach (var nsSearch in mailProvider.SearchPhrases)
                                                 {
-                                                    if (!HostedMailServers.ContainsKey(domain))
-                                                        HostedMailServers.Add(domain, MailServers[ii]);
+                                                    switch (nsSearch.FindAt)
+                                                    {
+                                                        case CheckAlgorith.Full:
+                                                            if (item.Exchange == nsSearch.Phrase)
+                                                            {
+                                                                if (!HostedMailServers.ContainsKey(domain))
+                                                                    HostedMailServers.Add(domain, mailProvider.Name);
+                                                            }
+                                                            break;
+                                                        case CheckAlgorith.StartWidth:
+                                                            if (item.Exchange.StartsWith(nsSearch.Phrase))
+                                                            {
+                                                                if (!HostedMailServers.ContainsKey(domain))
+                                                                    HostedMailServers.Add(domain, mailProvider.Name);
+                                                            }
+                                                            break;
+                                                        case CheckAlgorith.Contains:
+                                                            if (item.Exchange.Contains(nsSearch.Phrase))
+                                                            {
+                                                                if (!HostedMailServers.ContainsKey(domain))
+                                                                    HostedMailServers.Add(domain, mailProvider.Name);
+                                                            }
+                                                            break;
+                                                        case CheckAlgorith.EndWidth:
+                                                            if (item.Exchange.EndsWith(nsSearch.Phrase))
+                                                            {
+                                                                if (!HostedMailServers.ContainsKey(domain))
+                                                                    HostedMailServers.Add(domain, mailProvider.Name);
+                                                            }
+                                                            break;
+                                                        default:
+                                                            break;
+                                                    }
                                                 }
                                             }
                                         }
@@ -552,24 +580,47 @@ namespace DnsCheck
                                         domainscreen = true;
 
 
-                                        for (int ii = 0; ii < DNSProviders.Length; ii++)
+                                        foreach (var dnsProvider in SetProviders.dnsProviders)
                                         {
-                                            if (item.nameServer.EndsWith(NSForProviders[ii]))
+                                            foreach (var nsSearch in dnsProvider.SearchPhrases)
                                             {
-                                                if (!KnownDNSProvider.ContainsKey(domain))
-                                                    KnownDNSProvider.Add(domain, DNSProviders[ii]);
+                                                switch (nsSearch.FindAt)
+                                                {
+                                                    case CheckAlgorith.Full:
+                                                        if (item.nameServer == nsSearch.Phrase)
+                                                        {
+                                                            if (!KnownDNSProvider.ContainsKey(domain))
+                                                                KnownDNSProvider.Add(domain, dnsProvider.Name);
+                                                        }
+                                                        break;
+                                                    case CheckAlgorith.StartWidth:
+                                                        if (item.nameServer.StartsWith(nsSearch.Phrase))
+                                                        {
+                                                            if (!KnownDNSProvider.ContainsKey(domain))
+                                                                KnownDNSProvider.Add(domain, dnsProvider.Name);
+                                                        }
+                                                        break;
+                                                    case CheckAlgorith.Contains:
+                                                        if (item.nameServer.Contains(nsSearch.Phrase))
+                                                        {
+                                                            if (!KnownDNSProvider.ContainsKey(domain))
+                                                                KnownDNSProvider.Add(domain, dnsProvider.Name);
+                                                        }
+                                                        break;
+                                                    case CheckAlgorith.EndWidth:
+                                                        if (item.nameServer.EndsWith(nsSearch.Phrase))
+                                                        {
+                                                            if (!KnownDNSProvider.ContainsKey(domain))
+                                                                KnownDNSProvider.Add(domain, dnsProvider.Name);
+                                                        }
+                                                        break;
+                                                    default:
+                                                        break;
+                                                }
                                             }
                                         }
-
-                                        if (item.nameServer.Contains(".awsdns-"))
-                                        {
-                                            if (!KnownDNSProvider.ContainsKey(domain))
-                                                KnownDNSProvider.Add(domain, "AWS");
-                                        }
                                     }
-
                                 }
-
                             }
                         }
                         catch (Exception e)
@@ -584,11 +635,12 @@ namespace DnsCheck
 
                     if (CheckFor == "mx")
                     {
-                        Helpers.ListProviders(HostedMailServers, MailServers);
+                        Helpers.ListProviders(HostedMailServers, SetProviders.mailProviders);
                     }
-                    else if (CheckFor == "ns")
+
+                    if (CheckFor == "ns")
                     {
-                        Helpers.ListProviders(KnownDNSProvider, DNSProviders);
+                        Helpers.ListProviders(KnownDNSProvider, SetProviders.dnsProviders);
 
                     }
 
