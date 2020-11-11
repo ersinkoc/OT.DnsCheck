@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "DnsCheck": {
+      "commandName": "Project"
+    }
+  }
+}
