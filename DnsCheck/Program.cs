@@ -30,11 +30,7 @@ namespace DnsCheck
             {
 
                 Premium.CheckPremium("", true);
-
-
                 ApiCheckLimit = Premium.RateLimit;
-
-                // Banner
                 Helpers.Banner();
                 Console.ResetColor();
 
@@ -297,12 +293,11 @@ namespace DnsCheck
                 var errorNotSpecific = new List<string>();
                 Dictionary<string, string> MailProviderList = new Dictionary<string, string>();
                 Dictionary<string, string> DnsProviderList = new Dictionary<string, string>();
-
                 string CheckFor = "";
+
             AskCheckFor:
                 Console.WriteLine();
                 Console.WriteLine();
-
 
                 Console.WriteLine("[ (NS) Check | (MX) Check | (E)xit ]");
                 CheckFor = Console.ReadLine().ToLower();
@@ -312,7 +307,6 @@ namespace DnsCheck
 
                 if (CheckFor == "mx" || CheckFor == "ns")
                 {
-
                     Console.WriteLine($"\n{CheckFor.ToUpper()} checking for {domains.Count()} domains...\n");
 
                     foreach (string domain in domains)
@@ -639,7 +633,6 @@ namespace DnsCheck
                     Console.ResetColor();
                     Console.WriteLine("\n\nEnd of checking...");
                     Console.ReadKey();
-
                 }
                 else
                 {
