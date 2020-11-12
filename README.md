@@ -11,7 +11,7 @@ chmod +x DnsCheck
 
 **For files starting with "_"**
 
-Firstly install [.NET Core Runtime](https://dotnet.microsoft.com/download/dotnet-core/3.1)
+Firstly install [.NET Core Runtime 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1)
 
 **DNS Lookup API Usage**
 
