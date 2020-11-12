@@ -149,37 +149,36 @@ namespace DnsCheck
             };
 
             Console.WriteLine();
-            Console.Write("[");
             Console.BackgroundColor = cColor;
             Console.ForegroundColor = ConsoleColor.White;
-            string title = "Bulk DNS checking tool with DNS Lookup API - github.com/ersinkoc/ot.DnsCheck";
-            Console.Write(title);
+            string title = "DNS Check with DNS Lookup API - github.com/ersinkoc/ot.DnsCheck";
+            Console.Write("     " + title + "     ");
             Console.Title = title;
 
             Console.ResetColor();
-            Console.Write("]");
+
 
             Console.WriteLine();
 
             Console.ForegroundColor = ConsoleColor.White;
 
-            Console.WriteLine("   .-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
-            Console.WriteLine("   | You can purchase a subscription via PromptApi/RapidApi to use the API |");
-            Console.WriteLine("   |                                                                       |");
-            Console.WriteLine("   |    www.promptapi.com (recommended)                                    |");
-            Console.WriteLine("   !    https://promptapi.com/marketplace/description/dns_lookup-api       !");
-            Console.WriteLine("   :                                                                       :");
-            Console.WriteLine("   :    www.rapidapi.com                                                   :");
-            Console.WriteLine("   .    https://rapidapi.com/ersinkoc/api/dns-lookup2                      .");
-            Console.WriteLine("   .                                                                       .");
-            Console.WriteLine("   :    - 20 requests/day       - Free                                     :");
-            Console.WriteLine("   :    - 30.000 requests/month - 9.99$                                    :");
-            Console.WriteLine("   !    - 90.000 requests/month - 19.99$                                   !");
-            Console.WriteLine("   |                                                                       |");
-            Console.WriteLine("   | This console application is just an example of bulk NS & MX checking. |");
-            Console.WriteLine("   | You can also access A, AAAA, SOA, MX, TXT and NS records with the     |");
-            Console.WriteLine("   | DNS Lookup API. You can develop your own applications with API.       |");
-            Console.WriteLine("   .-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
+            Console.WriteLine(".-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
+            Console.WriteLine("| You can purchase a subscription via PromptApi/RapidApi to use the API |");
+            Console.WriteLine("|                                                                       |");
+            Console.WriteLine("|    www.promptapi.com (recommended)                                    |");
+            Console.WriteLine("!    https://promptapi.com/marketplace/description/dns_lookup-api       !");
+            Console.WriteLine(":                                                                       :");
+            Console.WriteLine(":    www.rapidapi.com                                                   :");
+            Console.WriteLine(".    https://rapidapi.com/ersinkoc/api/dns-lookup2                      .");
+            Console.WriteLine(".                                                                       .");
+            Console.WriteLine(":    - 20 requests/day       - Free                                     :");
+            Console.WriteLine(":    - 30.000 requests/month - 9.99$                                    :");
+            Console.WriteLine("!    - 90.000 requests/month - 19.99$                                   !");
+            Console.WriteLine("|                                                                       |");
+            Console.WriteLine("| This console application is just an example of bulk NS & MX checking. |");
+            Console.WriteLine("| You can also access A, AAAA, SOA, MX, TXT and NS records with the     |");
+            Console.WriteLine("| DNS Lookup API. You can develop your own applications with API.       |");
+            Console.WriteLine(".-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
             Console.ResetColor();
             Console.WriteLine();
         }

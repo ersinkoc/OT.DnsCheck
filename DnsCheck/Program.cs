@@ -34,13 +34,22 @@ namespace DnsCheck
                 Helpers.Banner();
                 Console.ResetColor();
 
+
+                //Console.WriteLine($"[ API Provider: (P)romptapi.com | (R)apidapi.com | (F)ree {FreeCheckLimit} domains | (E)xit ]");
+
+                Console.WriteLine("(P)romptapi.com      - You need apikey");
+                Console.WriteLine("(R)apidapi.com       - You need apikey");
                 if (Premium.CheckType == "PREMIUM")
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine("  *You already have access for Premium DNS Lookup API - (U)se Premium Rights\n");
+                    Console.WriteLine("(U)se Premium        - You have DNS Lookup API access with license");
                     Console.ResetColor();
                 }
-                Console.WriteLine($"[ API Provider: (P)romptapi.com | (R)apidapi.com | (F)ree {FreeCheckLimit} domains | (E)xit ]");
+                Console.WriteLine($"(F)ree               - for {FreeCheckLimit} domains");
+                Console.WriteLine("(E)xit");
+                Console.WriteLine();
+                Console.WriteLine("Select API Provider (or license key): [F]");
+
 
                 //string apiProvider = Console.ReadLine().ToLower
                 string apiProvider = string.Empty;
@@ -109,7 +118,6 @@ namespace DnsCheck
                         }
                         else if (!char.IsControl(keyInfo.KeyChar))
                         {
-
                             Console.Write("*");
 
                             apiKey += keyInfo.KeyChar;
@@ -128,12 +136,10 @@ namespace DnsCheck
                 }
                 else
                 {
-
                     if (apiProvider.ToLower() == "u")
                         Premium.CheckPremium("", true);
                     else
                         Premium.CheckPremium(apiProvider, false);
-
 
                     apiKey = apiProvider;
                     if (Premium.CheckType == "PREMIUM")
@@ -153,22 +159,23 @@ namespace DnsCheck
                 Console.ResetColor();
                 Console.ForegroundColor = ConsoleColor.Cyan;
                 Console.WriteLine();
+                Console.WriteLine();
                 switch (apiProvider)
                 {
                     case "p":
-                        Console.WriteLine(" You're using DNS Lookup API via PromptApi.com ");
+                        Console.WriteLine("You're using DNS Lookup API via PromptApi.com ");
                         apiProviderFullName = "promptapi.com";
                         ApiCheckLimit = MaxCheckLimit;
                         break;
 
                     case "r":
-                        Console.WriteLine(" You're using DNS Lookup API via RapidApi.com ");
+                        Console.WriteLine("You're using DNS Lookup API via RapidApi.com ");
                         apiProviderFullName = "rapidapi.com";
                         ApiCheckLimit = MaxCheckLimit;
                         break;
 
                     case "f":
-                        Console.WriteLine($" You're using Free DNS Lookup API for {FreeCheckLimit} domains ");
+                        Console.WriteLine($"You're using Free DNS Lookup API for {FreeCheckLimit} domains ");
                         apiProviderFullName = "Free";
 
                         break;
@@ -176,12 +183,12 @@ namespace DnsCheck
                     default:
                         if (Premium.CheckType == "PREMIUM")
                         {
-                            Console.WriteLine($" You can {ApiCheckLimit} domains checking with our Premium DNS Lookup API Servers ");
+                            Console.WriteLine($"You can {ApiCheckLimit} domains check with Premium DNS Lookup API");
                             apiProviderFullName = "Premium Servers";
                         }
                         else
                         {
-                            Console.WriteLine($" You're using Free DNS Lookup API for {FreeCheckLimit} domains ");
+                            Console.WriteLine($"You're using Free DNS Lookup API for {FreeCheckLimit} domains");
                             apiProviderFullName = "Free";
                         }
                         break;
@@ -189,15 +196,21 @@ namespace DnsCheck
                 Console.WriteLine();
 
                 Console.ForegroundColor = ConsoleColor.White;
-                var strProvider = " API Provider : " + apiProviderFullName;
-                var strMaxDomain = " Check Limit  : " + ApiCheckLimit + " domains";
+                var strProvider = "API Provider : " + apiProviderFullName;
+                var strMaxDomain = "Check Limit  : " + ApiCheckLimit + " domains";
                 Console.WriteLine(strProvider + "\n" + strMaxDomain);
                 string path = Directory.GetCurrentDirectory();
 
             askFile:
 
                 Console.WriteLine();
-                Console.WriteLine(@"[ Filename (c:\domain.txt) - (L)ist - (PLESK) for get domain list - (E)xit ]");
+                //Console.WriteLine(@"[ Filename (c:\domain.txt) - (L)ist - (PLESK) for get domain list - (E)xit ]");
+                Console.WriteLine();
+                Console.WriteLine("(L)ist   - File List");
+                Console.WriteLine("(P)lesk  - Get domain list from Plesk Control Panel");
+                Console.WriteLine("(E)xit");
+                Console.WriteLine();
+                Console.WriteLine(@"Enter filename: (c:\domain.txt)");
                 Console.ResetColor();
 
                 fileName = Console.ReadLine();
@@ -256,8 +269,8 @@ namespace DnsCheck
                 var domains = File.ReadAllLines(fileName);
                 var domainList = new ArrayList();
                 int maxDomainLenght = 0;
-
-                Console.Write("\nChecking domain list in file... ");
+                Console.WriteLine();
+                Console.Write(@$"Preparing domain list from {fileName} : ");
                 int totalDomain = domains.Count();
                 if (totalDomain == 0)
                 {
@@ -296,10 +309,12 @@ namespace DnsCheck
                 string CheckFor = "";
 
             AskCheckFor:
+                Console.WriteLine();  
+                Console.WriteLine($"You have {totalDomain} domains.");
                 Console.WriteLine();
-                Console.WriteLine();
-
-                Console.WriteLine("[ (NS) Check | (MX) Check | (E)xit ]");
+                Console.WriteLine("(NS) - NameServer Check");
+                Console.WriteLine("(MX) - Mail eXchange Check");
+                Console.WriteLine("(E)xit");
                 CheckFor = Console.ReadLine().ToLower();
 
                 if (CheckFor.Length == 0 || CheckFor == "e" || CheckFor == "exit")
@@ -401,6 +416,8 @@ namespace DnsCheck
 
                             if (rstatus == 200)
                             {
+
+                                #region CheckForMx
                                 if (CheckFor == "mx")
                                 {
                                     ReturnJsonMX rJson = new ReturnJsonMX();
@@ -514,7 +531,9 @@ namespace DnsCheck
                                         }
                                     }
                                 }
+                                #endregion
 
+                                #region CheckForNs
                                 if (CheckFor == "ns")
                                 {
                                     ReturnJsonNS rJson = new ReturnJsonNS();
@@ -610,6 +629,7 @@ namespace DnsCheck
                                         }
                                     }
                                 }
+                                #endregion
                             }
                         }
                         catch (Exception e)
