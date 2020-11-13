@@ -495,28 +495,28 @@ namespace DnsCheck
                                                 {
                                                     switch (nsSearch.FindAt)
                                                     {
-                                                        case CheckAlgorith.Full:
+                                                        case WhereIs.Full:
                                                             if (item.Exchange == nsSearch.Phrase)
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
-                                                        case CheckAlgorith.StartWidth:
+                                                        case WhereIs.StartWidth:
                                                             if (item.Exchange.StartsWith(nsSearch.Phrase))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
-                                                        case CheckAlgorith.Contains:
+                                                        case WhereIs.Contains:
                                                             if (item.Exchange.Contains(nsSearch.Phrase))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
-                                                        case CheckAlgorith.EndWidth:
+                                                        case WhereIs.EndWidth:
                                                             if (item.Exchange.EndsWith(nsSearch.Phrase))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
@@ -594,28 +594,28 @@ namespace DnsCheck
                                             {
                                                 switch (nsSearch.FindAt)
                                                 {
-                                                    case CheckAlgorith.Full:
+                                                    case WhereIs.Full:
                                                         if (item.nameServer == nsSearch.Phrase)
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
-                                                    case CheckAlgorith.StartWidth:
+                                                    case WhereIs.StartWidth:
                                                         if (item.nameServer.StartsWith(nsSearch.Phrase))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
-                                                    case CheckAlgorith.Contains:
+                                                    case WhereIs.Contains:
                                                         if (item.nameServer.Contains(nsSearch.Phrase))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
-                                                    case CheckAlgorith.EndWidth:
+                                                    case WhereIs.EndWidth:
                                                         if (item.nameServer.EndsWith(nsSearch.Phrase))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))

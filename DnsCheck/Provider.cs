@@ -14,11 +14,11 @@ namespace DnsCheck
     public class SearchPhrase
     {
         public string Phrase { get; set; }
-        public CheckAlgorith FindAt { get; set; }
+        public WhereIs FindAt { get; set; }
     }
 
 
-    public enum CheckAlgorith
+    public enum WhereIs
     {
         Full,
         StartWidth,
