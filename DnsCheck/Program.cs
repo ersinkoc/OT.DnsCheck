@@ -34,7 +34,6 @@ namespace DnsCheck
                 Helpers.Banner();
                 Console.ResetColor();
 
-
                 //Console.WriteLine($"[ API Provider: (P)romptapi.com | (R)apidapi.com | (F)ree {FreeCheckLimit} domains | (E)xit ]");
 
                 Console.WriteLine("(P)romptapi.com      - You need apikey");
@@ -277,7 +276,10 @@ namespace DnsCheck
                     Console.WriteLine("Empty File!");
                     continue;
                 }
+                Console.WriteLine($"{totalDomain} lines");
                 int fives = totalDomain / 20 + 1;
+                Console.WriteLine();
+                int y = 1;
                 foreach (string d in domains)
                 {
                     string parsedDomain = Helpers.ParseDomain(d);
@@ -287,9 +289,12 @@ namespace DnsCheck
 
                     maxDomainLenght = Math.Max(parsedDomain.Length, maxDomainLenght);
                     int x = domainList.Count;
-                    Console.Title = "Checking domains...";
+                    Console.Title = "Parsing domains...";
 
-                    if (x % fives == 0) Console.Write("o");
+                    if (x % fives == 0) y++;
+
+                    Console.Write($"\r{x} domains found [" + new String('o',y) + "]");
+
                     if (x == ApiCheckLimit) break;
                 }
 
@@ -310,7 +315,7 @@ namespace DnsCheck
 
             AskCheckFor:
                 Console.WriteLine();  
-                Console.WriteLine($"You have {totalDomain} domains.");
+                //Console.WriteLine($"You have {totalDomain} domains.");
                 Console.WriteLine();
                 Console.WriteLine("(NS) - NameServer Check");
                 Console.WriteLine("(MX) - Mail eXchange Check");

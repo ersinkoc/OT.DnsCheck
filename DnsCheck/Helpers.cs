@@ -5,6 +5,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml.Serialization;
 using System.Linq;
+using System.Threading;
+using System.Drawing;
 
 namespace DnsCheck
 {
@@ -135,6 +137,18 @@ namespace DnsCheck
             Console.WriteLine(desc);
             Console.ResetColor();
         }
+
+        public static void ShowSimplePercentage()
+        {
+            for (int i = 0; i <= 100; i++)
+            {
+                Console.Write($"\rProgress: {i}%   ");
+                Thread.Sleep(25);
+            }
+
+            Console.Write("\rDone!          ");
+        }
+
 
         public static void Banner()
         {
