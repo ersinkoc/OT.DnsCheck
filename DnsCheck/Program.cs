@@ -293,7 +293,7 @@ namespace DnsCheck
 
                     if (x % fives == 0) y++;
 
-                    Console.Write($"\r{x} domains found [" + new String('o',y) + "]");
+                    Console.Write($"\r[" + new String('o',y) + $"] {x} domains found.");
 
                     if (x == ApiCheckLimit) break;
                 }
