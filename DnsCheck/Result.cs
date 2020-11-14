@@ -4,8 +4,6 @@ namespace DnsCheck
 {
     partial class Program
     {
-
-
         public class ReturnJson
         {
             public string ProcessResponseTime { get; set; }
@@ -24,7 +22,6 @@ namespace DnsCheck
             public List<ResultNs> Results { get; set; }
         }
 
-
         public class ResultMx
         {
             public int Reference { get; set; }
@@ -34,7 +31,6 @@ namespace DnsCheck
         public class ResultNs
         {
             public string nameServer { get; set; }
-
         }
     }
 }

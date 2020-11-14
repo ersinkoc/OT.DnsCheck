@@ -1,14 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
-using System.Runtime.Serialization.Json;
-using System.Text;
 
 namespace DnsCheck
 {
-    class SetProviders
+    internal class SetProviders
     {
         public static List<Provider> dnsProviders;
         public static List<Provider> mailProviders;
@@ -74,7 +71,6 @@ namespace DnsCheck
                     SearchPhrases = new List<SearchPhrase>() {
                         new SearchPhrase() { Phrase = ".bizimdns.com",FindAt = WhereIs.EndWidth },
                         new SearchPhrase() { Phrase = ".bizimhost.com.tr",FindAt = WhereIs.EndWidth }
-
                     }
                 },
                 new Provider(){
@@ -88,7 +84,6 @@ namespace DnsCheck
                     SearchPhrases = new List<SearchPhrase>() {
                         new SearchPhrase() { Phrase = ".protection.outlook.com",FindAt = WhereIs.EndWidth },
                         new SearchPhrase() { Phrase = ".outlook.com",FindAt = WhereIs.EndWidth },
-
                     }
                 },
                 new Provider(){

@@ -4,7 +4,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -28,7 +27,6 @@ namespace DnsCheck
 
             while (fileName != "e")
             {
-
                 Premium.CheckPremium("", true);
                 ApiCheckLimit = Premium.RateLimit;
                 Helpers.Banner();
@@ -48,7 +46,6 @@ namespace DnsCheck
                 Console.WriteLine("(E)xit");
                 Console.WriteLine();
                 Console.WriteLine("Select API Provider (or license key): [F]");
-
 
                 //string apiProvider = Console.ReadLine().ToLower
                 string apiProvider = string.Empty;
@@ -71,10 +68,8 @@ namespace DnsCheck
                             Console.Write(key);
                         else
                             Console.Write("*");
-
                     }
                 } while (key != ConsoleKey.Enter);
-
 
                 apiProvider = apiProvider.ToLower();
 
@@ -85,7 +80,6 @@ namespace DnsCheck
 
                 string apiKey = string.Empty;
                 string apiProviderFullName;
-
 
                 if (apiProvider == "p" || apiProvider == "promptapi" || apiProvider == "promptapi.com" || apiProvider == "r" || apiProvider == "rapidapi" || apiProvider == "rapidapi.com")
                 {
@@ -293,7 +287,7 @@ namespace DnsCheck
 
                     if (x % fives == 0) y++;
 
-                    Console.Write($"\r[" + new String('o',y) + $"] {x} domains found.");
+                    Console.Write($"\r[" + new String('o', y) + $"] {x} domains found.");
 
                     if (x == ApiCheckLimit) break;
                 }
@@ -314,7 +308,7 @@ namespace DnsCheck
                 string CheckFor = "";
 
             AskCheckFor:
-                Console.WriteLine();  
+                Console.WriteLine();
                 //Console.WriteLine($"You have {totalDomain} domains.");
                 Console.WriteLine();
                 Console.WriteLine("(NS) - NameServer Check");
@@ -421,8 +415,8 @@ namespace DnsCheck
 
                             if (rstatus == 200)
                             {
-
                                 #region CheckForMx
+
                                 if (CheckFor == "mx")
                                 {
                                     ReturnJsonMX rJson = new ReturnJsonMX();
@@ -507,6 +501,7 @@ namespace DnsCheck
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
+
                                                         case WhereIs.StartWidth:
                                                             if (item.Exchange.StartsWith(nsSearch.Phrase))
                                                             {
@@ -514,6 +509,7 @@ namespace DnsCheck
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
+
                                                         case WhereIs.Contains:
                                                             if (item.Exchange.Contains(nsSearch.Phrase))
                                                             {
@@ -521,6 +517,7 @@ namespace DnsCheck
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
+
                                                         case WhereIs.EndWidth:
                                                             if (item.Exchange.EndsWith(nsSearch.Phrase))
                                                             {
@@ -528,6 +525,7 @@ namespace DnsCheck
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
+
                                                         default:
                                                             break;
                                                     }
@@ -536,9 +534,11 @@ namespace DnsCheck
                                         }
                                     }
                                 }
-                                #endregion
+
+                                #endregion CheckForMx
 
                                 #region CheckForNs
+
                                 if (CheckFor == "ns")
                                 {
                                     ReturnJsonNS rJson = new ReturnJsonNS();
@@ -555,6 +555,7 @@ namespace DnsCheck
                                                 case "Non-Existent Domain":
                                                     errorNonExistDomain.Add(domain);
                                                     break;
+
                                                 default:
                                                     errorNotSpecific.Add(domain);
                                                     break;
@@ -592,7 +593,6 @@ namespace DnsCheck
                                         Console.Write($"] {domainstr} : {item.nameServer}" + "\n");
                                         domainscreen = true;
 
-
                                         foreach (var dnsProvider in SetProviders.dnsProviders)
                                         {
                                             foreach (var nsSearch in dnsProvider.SearchPhrases)
@@ -606,6 +606,7 @@ namespace DnsCheck
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
+
                                                     case WhereIs.StartWidth:
                                                         if (item.nameServer.StartsWith(nsSearch.Phrase))
                                                         {
@@ -613,6 +614,7 @@ namespace DnsCheck
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
+
                                                     case WhereIs.Contains:
                                                         if (item.nameServer.Contains(nsSearch.Phrase))
                                                         {
@@ -620,6 +622,7 @@ namespace DnsCheck
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
+
                                                     case WhereIs.EndWidth:
                                                         if (item.nameServer.EndsWith(nsSearch.Phrase))
                                                         {
@@ -627,6 +630,7 @@ namespace DnsCheck
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
+
                                                     default:
                                                         break;
                                                 }
@@ -634,7 +638,8 @@ namespace DnsCheck
                                         }
                                     }
                                 }
-                                #endregion
+
+                                #endregion CheckForNs
                             }
                         }
                         catch (Exception e)

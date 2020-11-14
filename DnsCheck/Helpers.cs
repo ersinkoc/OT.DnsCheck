@@ -3,10 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Xml.Serialization;
 using System.Linq;
-using System.Threading;
-using System.Drawing;
 
 namespace DnsCheck
 {
@@ -16,7 +13,6 @@ namespace DnsCheck
         {
             Console.WriteLine(provider.Count + " provider");
             Console.WriteLine(a.Count + " domain(s)");
-
 
             if (a.Count > 0)
             {
@@ -156,7 +152,6 @@ namespace DnsCheck
             Console.Title = title;
 
             Console.ResetColor();
-
 
             Console.WriteLine();
 

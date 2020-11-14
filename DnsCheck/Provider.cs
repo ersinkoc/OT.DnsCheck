@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DnsCheck
 {
@@ -8,7 +6,6 @@ namespace DnsCheck
     {
         public string Name { get; set; }
         public List<SearchPhrase> SearchPhrases { get; set; }
-
     }
 
     public class SearchPhrase
@@ -16,7 +13,6 @@ namespace DnsCheck
         public string Phrase { get; set; }
         public WhereIs FindAt { get; set; }
     }
-
 
     public enum WhereIs
     {
