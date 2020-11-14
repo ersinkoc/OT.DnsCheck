@@ -233,7 +233,7 @@ namespace DnsCheck
                     continue;
                 }
 
-                if (fileName.ToLower() == "plesk")
+                if (fileName.ToLower() == "plesk" || fileName.ToLower() == "p")
                 {
                     if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                     {

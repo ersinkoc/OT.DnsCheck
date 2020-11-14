@@ -14,36 +14,33 @@ namespace DnsCheck
     {
         public static void ListProviders(Dictionary<string, string> a, List<Provider> provider)
         {
-            Console.WriteLine(provider.Count +" provider");
+            Console.WriteLine(provider.Count + " provider");
             Console.WriteLine(a.Count + " domain(s)");
 
 
             if (a.Count > 0)
             {
-                    foreach (Provider p in provider)
+                foreach (Provider p in provider)
+                {
+                    bool firstForTitle = false;
+                    foreach (var item in from item in a
+                                         where item.Value == p.Name
+                                         select item)
                     {
-                        bool firstForTitle = false;
-                        foreach (var item in from item in a
-                                             where item.Value == p.Name
-                                             select item)
+                        if (firstForTitle == false)
                         {
-                            if (firstForTitle == false)
-                            {
-                                Console.WriteLine();
-                                Console.ForegroundColor = ConsoleColor.Cyan;
-                                Console.Write(p.Name + "\n");
-                                Console.ResetColor();
-                                Console.ForegroundColor = ConsoleColor.White;
-                                firstForTitle = true;
-                            }
-                            Console.WriteLine(item.Key);
+                            Console.WriteLine();
+                            Console.ForegroundColor = ConsoleColor.Cyan;
+                            Console.Write(p.Name + "\n");
+                            Console.ResetColor();
+                            Console.ForegroundColor = ConsoleColor.White;
+                            firstForTitle = true;
                         }
-                        Console.ResetColor();
+                        Console.WriteLine(item.Key);
                     }
-
-
+                    Console.ResetColor();
+                }
             }
-
         }
 
         public static void ListWarnings(List<string> t, string desc, ConsoleColor bgColor, ConsoleColor fgColor, string toFile = "")
@@ -134,21 +131,10 @@ namespace DnsCheck
         public static void AlertApiLimit(string desc)
         {
             Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine();
             Console.WriteLine(desc);
             Console.ResetColor();
         }
-
-        public static void ShowSimplePercentage()
-        {
-            for (int i = 0; i <= 100; i++)
-            {
-                Console.Write($"\rProgress: {i}%   ");
-                Thread.Sleep(25);
-            }
-
-            Console.Write("\rDone!          ");
-        }
-
 
         public static void Banner()
         {
