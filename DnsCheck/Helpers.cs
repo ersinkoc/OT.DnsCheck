@@ -9,6 +9,19 @@ namespace DnsCheck
 {
     public static class Helpers
     {
+        public static string GetApiURL(string CheckFor, string domain, string apiProvider = "")
+        {
+            var url = Premium.DNSAPIServer + "/api/" + CheckFor + "/" + domain;
+
+            if (apiProvider == "p")
+                url = "https://api.promptapi.com/dns_lookup/api/" + CheckFor + "/" + domain;
+
+            if (apiProvider == "r")
+                url = "https://dns-lookup2.p.rapidapi.com/Api/" + CheckFor + "/" + domain;
+
+            return url;
+        }
+
         public static void ListProviders(Dictionary<string, string> a, List<Provider> provider)
         {
             Console.WriteLine(provider.Count + " provider");

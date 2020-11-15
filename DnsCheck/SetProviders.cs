@@ -57,39 +57,39 @@ namespace DnsCheck
             mailProviders = new List<Provider>() {
                 new Provider(){
                     Name = "Google",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() {Phrase = "aspmx.l.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase(){ Phrase = "alt1.aspmx.l.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase() {Phrase = "alt2.aspmx.l.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase() {Phrase = "alt3.aspmx.l.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase() {Phrase = "alt4.aspmx.l.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase() {Phrase = ".l.google.com", FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() {Word = "aspmx.l.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser(){ Word = "alt1.aspmx.l.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser() {Word = "alt2.aspmx.l.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser() {Word = "alt3.aspmx.l.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser() {Word = "alt4.aspmx.l.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser() {Word = ".l.google.com", Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
                 new Provider(){
                     Name = "BizimHost",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".bizimdns.com",FindAt = WhereIs.EndWidth },
-                        new SearchPhrase() { Phrase = ".bizimhost.com.tr",FindAt = WhereIs.EndWidth }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".bizimdns.com",Algorithm = ParsingAlgorithm.EndWidth },
+                        new Parser() { Word = ".bizimhost.com.tr",Algorithm = ParsingAlgorithm.EndWidth }
                     }
                 },
                 new Provider(){
                     Name = "Yandex",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = "mx.yandex.net",FindAt = WhereIs.Full }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = "mx.yandex.net",Algorithm = ParsingAlgorithm.Full }
                     }
                 },
                 new Provider(){
                     Name = "Office365",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".protection.outlook.com",FindAt = WhereIs.EndWidth },
-                        new SearchPhrase() { Phrase = ".outlook.com",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".protection.outlook.com",Algorithm = ParsingAlgorithm.EndWidth },
+                        new Parser() { Word = ".outlook.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
                 new Provider(){
                     Name = "Zoho",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".zoho.com",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".zoho.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
             };
@@ -115,82 +115,82 @@ namespace DnsCheck
             dnsProviders = new List<Provider>() {
                 new Provider(){
                     Name = "Google",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() {Phrase = "ns1.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase(){ Phrase = "ns2.google.com", FindAt = WhereIs.Full },
-                        new SearchPhrase() {Phrase = ".google.com", FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() {Word = "ns1.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser(){ Word = "ns2.google.com", Algorithm = ParsingAlgorithm.Full },
+                        new Parser() {Word = ".google.com", Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
 
                 new Provider(){
                     Name = "GoogleDomains",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".googledomains.com",FindAt = WhereIs.EndWidth }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".googledomains.com",Algorithm = ParsingAlgorithm.EndWidth }
                     }
                 },
 
                 new Provider(){
                     Name = "BizimDns",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".bizimdns.com",FindAt = WhereIs.EndWidth }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".bizimdns.com",Algorithm = ParsingAlgorithm.EndWidth }
                     }
                 },
 
                 new Provider(){
                     Name = "Yandex",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".yandex.net",FindAt = WhereIs.EndWidth }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".yandex.net",Algorithm = ParsingAlgorithm.EndWidth }
                     }
                 },
 
                 new Provider(){
                     Name = "CloudFlare",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".cloudflare.com",FindAt = WhereIs.EndWidth }
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".cloudflare.com",Algorithm = ParsingAlgorithm.EndWidth }
                     }
                 },
 
                 new Provider(){
                     Name = "Azure",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".azure-dns.com",FindAt = WhereIs.EndWidth },
-                        new SearchPhrase() { Phrase = ".azure-dns.net",FindAt = WhereIs.EndWidth },
-                        new SearchPhrase() { Phrase = ".azure-dns.org",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".azure-dns.com",Algorithm = ParsingAlgorithm.EndWidth },
+                        new Parser() { Word = ".azure-dns.net",Algorithm = ParsingAlgorithm.EndWidth },
+                        new Parser() { Word = ".azure-dns.org",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
 
                 new Provider(){
                     Name = "AmazonWS",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".awsdns-",FindAt = WhereIs.Contains },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".awsdns-",Algorithm = ParsingAlgorithm.Contains },
                     }
                 },
 
                 new Provider(){
                     Name = "BlueHost",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".bluehost.com",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".bluehost.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
 
                 new Provider(){
                     Name = "HostGator",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".hostgator.com",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".hostgator.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
 
                 new Provider(){
                     Name = "UltraDNS",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".ultradns.net",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".ultradns.net",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
 
                 new Provider(){
                     Name = "DomainControl",
-                    SearchPhrases = new List<SearchPhrase>() {
-                        new SearchPhrase() { Phrase = ".domaincontrol.com",FindAt = WhereIs.EndWidth },
+                    Parsers = new List<Parser>() {
+                        new Parser() { Word = ".domaincontrol.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
             };

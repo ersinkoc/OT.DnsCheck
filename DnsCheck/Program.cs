@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
 
 namespace DnsCheck
 {
@@ -325,8 +326,10 @@ namespace DnsCheck
 
                     foreach (string domain in domains)
                     {
+                        // Free Dns Lookup API Servers have rate limits, so we added one second waiting time between checks :)
                         if (apiKey == "free")
                         {
+
                             System.Threading.Thread.Sleep(1000);
                         }
 
@@ -337,15 +340,7 @@ namespace DnsCheck
 
                             bool domainscreen = false;
                             string domainstr = domain;
-                            string url = "";
-
-                            url = Premium.DNSAPIServer + "/api/" + CheckFor + "/" + domain;
-
-                            if (apiProvider == "p")
-                                url = "https://api.promptapi.com/dns_lookup/api/" + CheckFor + "/" + domain;
-
-                            if (apiProvider == "r")
-                                url = "https://dns-lookup2.p.rapidapi.com/Api/" + CheckFor + "/" + domain;
+                            string url = Helpers.GetApiURL(CheckFor, domain, apiProvider);
 
                             RestRequest request = new RestRequest(Method.GET);
 
@@ -490,36 +485,45 @@ namespace DnsCheck
 
                                             foreach (var mailProvider in SetProviders.mailProviders)
                                             {
-                                                foreach (var nsSearch in mailProvider.SearchPhrases)
+                                                foreach (var nsSearch in mailProvider.Parsers)
                                                 {
-                                                    switch (nsSearch.FindAt)
+                                                    switch (nsSearch.Algorithm)
                                                     {
-                                                        case WhereIs.Full:
-                                                            if (item.Exchange == nsSearch.Phrase)
+
+                                                        case ParsingAlgorithm.Regex:
+                                                            if (Regex.IsMatch(item.Exchange, nsSearch.Word))
+                                                            {
+                                                                if (!DnsProviderList.ContainsKey(domain))
+                                                                    DnsProviderList.Add(domain, mailProvider.Name);
+                                                            }
+                                                            break;
+
+                                                        case ParsingAlgorithm.Full:
+                                                            if (item.Exchange == nsSearch.Word)
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
 
-                                                        case WhereIs.StartWidth:
-                                                            if (item.Exchange.StartsWith(nsSearch.Phrase))
+                                                        case ParsingAlgorithm.StartWidth:
+                                                            if (item.Exchange.StartsWith(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
 
-                                                        case WhereIs.Contains:
-                                                            if (item.Exchange.Contains(nsSearch.Phrase))
+                                                        case ParsingAlgorithm.Contains:
+                                                            if (item.Exchange.Contains(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
                                                             }
                                                             break;
 
-                                                        case WhereIs.EndWidth:
-                                                            if (item.Exchange.EndsWith(nsSearch.Phrase))
+                                                        case ParsingAlgorithm.EndWidth:
+                                                            if (item.Exchange.EndsWith(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
                                                                     MailProviderList.Add(domain, mailProvider.Name);
@@ -595,36 +599,44 @@ namespace DnsCheck
 
                                         foreach (var dnsProvider in SetProviders.dnsProviders)
                                         {
-                                            foreach (var nsSearch in dnsProvider.SearchPhrases)
+                                            foreach (var nsSearch in dnsProvider.Parsers)
                                             {
-                                                switch (nsSearch.FindAt)
+                                                switch (nsSearch.Algorithm)
                                                 {
-                                                    case WhereIs.Full:
-                                                        if (item.nameServer == nsSearch.Phrase)
+                                                    case ParsingAlgorithm.Regex:
+                                                        if (Regex.IsMatch(item.nameServer, nsSearch.Word))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
 
-                                                    case WhereIs.StartWidth:
-                                                        if (item.nameServer.StartsWith(nsSearch.Phrase))
+                                                    case ParsingAlgorithm.Full:
+                                                        if (item.nameServer == nsSearch.Word)
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
 
-                                                    case WhereIs.Contains:
-                                                        if (item.nameServer.Contains(nsSearch.Phrase))
+                                                    case ParsingAlgorithm.StartWidth:
+                                                        if (item.nameServer.StartsWith(nsSearch.Word))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);
                                                         }
                                                         break;
 
-                                                    case WhereIs.EndWidth:
-                                                        if (item.nameServer.EndsWith(nsSearch.Phrase))
+                                                    case ParsingAlgorithm.Contains:
+                                                        if (item.nameServer.Contains(nsSearch.Word))
+                                                        {
+                                                            if (!DnsProviderList.ContainsKey(domain))
+                                                                DnsProviderList.Add(domain, dnsProvider.Name);
+                                                        }
+                                                        break;
+
+                                                    case ParsingAlgorithm.EndWidth:
+                                                        if (item.nameServer.EndsWith(nsSearch.Word))
                                                         {
                                                             if (!DnsProviderList.ContainsKey(domain))
                                                                 DnsProviderList.Add(domain, dnsProvider.Name);

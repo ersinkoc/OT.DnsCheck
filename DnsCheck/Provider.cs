@@ -5,20 +5,21 @@ namespace DnsCheck
     public class Provider
     {
         public string Name { get; set; }
-        public List<SearchPhrase> SearchPhrases { get; set; }
+        public List<Parser> Parsers { get; set; }
     }
 
-    public class SearchPhrase
+    public class Parser
     {
-        public string Phrase { get; set; }
-        public WhereIs FindAt { get; set; }
+        public string Word { get; set; }
+        public ParsingAlgorithm Algorithm { get; set; }
     }
 
-    public enum WhereIs
+    public enum ParsingAlgorithm
     {
         Full,
         StartWidth,
         Contains,
-        EndWidth
+        EndWidth,
+        Regex // TODO
     }
 }
