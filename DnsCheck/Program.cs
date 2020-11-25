@@ -490,14 +490,6 @@ namespace DnsCheck
                                                     switch (nsSearch.Algorithm)
                                                     {
 
-                                                        case ParsingAlgorithm.Regex:
-                                                            if (Regex.IsMatch(item.Exchange, nsSearch.Word))
-                                                            {
-                                                                if (!DnsProviderList.ContainsKey(domain))
-                                                                    DnsProviderList.Add(domain, mailProvider.Name);
-                                                            }
-                                                            break;
-
                                                         case ParsingAlgorithm.Full:
                                                             if (item.Exchange == nsSearch.Word)
                                                             {
@@ -603,13 +595,6 @@ namespace DnsCheck
                                             {
                                                 switch (nsSearch.Algorithm)
                                                 {
-                                                    case ParsingAlgorithm.Regex:
-                                                        if (Regex.IsMatch(item.nameServer, nsSearch.Word))
-                                                        {
-                                                            if (!DnsProviderList.ContainsKey(domain))
-                                                                DnsProviderList.Add(domain, dnsProvider.Name);
-                                                        }
-                                                        break;
 
                                                     case ParsingAlgorithm.Full:
                                                         if (item.nameServer == nsSearch.Word)
