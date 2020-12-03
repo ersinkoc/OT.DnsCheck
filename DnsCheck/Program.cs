@@ -355,6 +355,13 @@ namespace DnsCheck
                                 request.AddHeader("x-rapidapi-key", apiKey);
                             }
 
+
+                            if (apiProvider != "r" && apiProvider !="p")
+                            {
+                                request.AddHeader("ProviderId", "DnsCheck");
+                                request.AddHeader("ApiKey", "5732a97f-6ecc-4dad-b284-d25bf6254c54");
+                            }
+
                             var client = new RestClient(url)
                             {
                                 Timeout = -1
