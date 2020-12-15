@@ -324,6 +324,9 @@ namespace DnsCheck
                 {
                     Console.WriteLine($"\n{CheckFor.ToUpper()} checking for {domains.Count()} domains...\n");
 
+                    List<CheckResult> checkResults = new List<CheckResult>();
+
+
                     foreach (string domain in domains)
                     {
                         // Free Dns Lookup API Servers have rate limits, so we added one second waiting time between checks :)
@@ -356,7 +359,7 @@ namespace DnsCheck
                             }
 
 
-                            if (apiProvider != "r" && apiProvider !="p")
+                            if (apiProvider != "r" && apiProvider != "p")
                             {
                                 request.AddHeader("ProviderId", "DnsCheck");
                                 request.AddHeader("ApiKey", Premium.FreeApiKey);
@@ -417,10 +420,14 @@ namespace DnsCheck
 
                             if (rstatus == 200)
                             {
+
+
                                 #region CheckForMx
 
                                 if (CheckFor == "mx")
                                 {
+
+
                                     ReturnJsonMX rJson = new ReturnJsonMX();
                                     rJson = JsonConvert.DeserializeObject<ReturnJsonMX>(response.Content);
 
@@ -462,6 +469,9 @@ namespace DnsCheck
 
                                     Console.ResetColor();
 
+                                    var MPtoList = false;
+                                    var MailProviderName = "Local";
+
                                     foreach (var item in rJson.Results)
                                     {
                                         if (item.Exchange == rJson.Domain || item.Exchange.EndsWith("." + rJson.Domain))
@@ -474,6 +484,12 @@ namespace DnsCheck
 
                                             Console.Write($" {domainstr} : {item.Exchange} ({item.Reference})" + "\n");
                                             domainscreen = true;
+
+                                            if (!MPtoList)
+                                            {
+                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, CheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                                                MPtoList = true;
+                                            }
                                         }
                                         else
                                         {
@@ -490,6 +506,7 @@ namespace DnsCheck
                                             Console.Write($"] {domainstr} : {item.Exchange} ({item.Reference})" + "\n");
                                             domainscreen = true;
 
+
                                             foreach (var mailProvider in SetProviders.mailProviders)
                                             {
                                                 foreach (var nsSearch in mailProvider.Parsers)
@@ -501,7 +518,10 @@ namespace DnsCheck
                                                             if (item.Exchange == nsSearch.Word)
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
+                                                                {
                                                                     MailProviderList.Add(domain, mailProvider.Name);
+                                                                    MailProviderName = mailProvider.Name;
+                                                                }
                                                             }
                                                             break;
 
@@ -509,7 +529,10 @@ namespace DnsCheck
                                                             if (item.Exchange.StartsWith(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
+                                                                {
                                                                     MailProviderList.Add(domain, mailProvider.Name);
+                                                                    MailProviderName = mailProvider.Name;
+                                                                }
                                                             }
                                                             break;
 
@@ -517,7 +540,10 @@ namespace DnsCheck
                                                             if (item.Exchange.Contains(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
+                                                                {
                                                                     MailProviderList.Add(domain, mailProvider.Name);
+                                                                    MailProviderName = mailProvider.Name;
+                                                                }
                                                             }
                                                             break;
 
@@ -525,7 +551,10 @@ namespace DnsCheck
                                                             if (item.Exchange.EndsWith(nsSearch.Word))
                                                             {
                                                                 if (!MailProviderList.ContainsKey(domain))
+                                                                {
                                                                     MailProviderList.Add(domain, mailProvider.Name);
+                                                                    MailProviderName = mailProvider.Name;
+                                                                }
                                                             }
                                                             break;
 
@@ -534,8 +563,19 @@ namespace DnsCheck
                                                     }
                                                 }
                                             }
+
+                                            if (!MPtoList)
+                                            {
+                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, CheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                                                MPtoList = true;
+                                            }
+
                                         }
+
+                                        
                                     }
+
+
                                 }
 
                                 #endregion CheckForMx
@@ -653,6 +693,12 @@ namespace DnsCheck
                     }
 
                     Console.Title = "Check Completed";
+
+                    Helpers.SaveJsonFile(checkResults);
+
+
+                    //Console.WriteLine(jsonExport);
+
                     Console.WriteLine();
 
                     if (CheckFor == "mx") Helpers.ListProviders(MailProviderList, SetProviders.mailProviders);

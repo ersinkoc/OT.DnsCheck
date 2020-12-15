@@ -1,7 +1,9 @@
 ﻿using Nager.PublicSuffix;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 
@@ -123,6 +125,12 @@ namespace DnsCheck
 
         public static string ParseDomain(string domain)
         {
+
+            string unicode = domain;
+            IdnMapping mapping = new IdnMapping();
+            string ascii = mapping.GetAscii(unicode);
+            domain = ascii;
+
             try
             {
                 var domainParser = new DomainParser(new WebTldRuleProvider());
@@ -189,6 +197,24 @@ namespace DnsCheck
             Console.WriteLine(".-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
             Console.ResetColor();
             Console.WriteLine();
+        }
+
+        internal static void SaveJsonFile(List<CheckResult> checkResults)
+        {
+            string jsonExport = JsonConvert.SerializeObject(checkResults);
+            string jsonFile = DateTime.Now.ToString("yyyy-MM-dd") + ".json";
+            try
+            {
+                String filePath = @"" + jsonFile;
+                if (File.Exists(filePath)) File.Delete(filePath);
+                using StreamWriter sr = File.AppendText(filePath);
+                sr.WriteLine(jsonExport);
+                sr.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }

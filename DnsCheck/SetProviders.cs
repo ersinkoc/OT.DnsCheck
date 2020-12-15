@@ -83,7 +83,7 @@ namespace DnsCheck
                     Name = "Office365",
                     Parsers = new List<Parser>() {
                         new Parser() { Word = ".protection.outlook.com",Algorithm = ParsingAlgorithm.EndWidth },
-                        new Parser() { Word = ".outlook.com",Algorithm = ParsingAlgorithm.EndWidth },
+                        //new Parser() { Word = ".outlook.com",Algorithm = ParsingAlgorithm.EndWidth },
                     }
                 },
                 new Provider(){
