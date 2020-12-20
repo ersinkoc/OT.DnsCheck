@@ -487,7 +487,7 @@ namespace DnsCheck
 
                                             if (!MPtoList)
                                             {
-                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, CheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, ControlTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
                                                 MPtoList = true;
                                             }
                                         }
@@ -566,7 +566,7 @@ namespace DnsCheck
 
                                             if (!MPtoList)
                                             {
-                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, CheckTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
+                                                checkResults.Add(new CheckResult() { Domain = domain, MailProvider = MailProviderName, ControlTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") });
                                                 MPtoList = true;
                                             }
 
