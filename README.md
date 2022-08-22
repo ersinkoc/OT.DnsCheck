@@ -15,7 +15,7 @@ Firstly install [.NET Core Runtime 3.1](https://dotnet.microsoft.com/download/do
 
 **DNS Lookup API Usage**
 
-You can purchase a subscription via [PromptAPI.com](https://promptapi.com/marketplace/description/dns_lookup-api) or [RapidAPI.com](https://rapidapi.com/ersinkoc/api/dns-lookup2)
+You can purchase a subscription via [APILayer.com](https://apilayer.com/marketplace/description/dns_lookup-api) or [RapidAPI.com](https://rapidapi.com/ersinkoc/api/dns-lookup2)
  to use the API
 
 > Subscription Plans
