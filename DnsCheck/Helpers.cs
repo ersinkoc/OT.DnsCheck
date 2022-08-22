@@ -15,8 +15,8 @@ namespace DnsCheck
         {
             var url = Premium.DNSAPIServer + "/api/" + CheckFor + "/" + domain;
 
-            if (apiProvider == "p")
-                url = "https://api.promptapi.com/dns_lookup/api/" + CheckFor + "/" + domain;
+            if (apiProvider == "a")
+                url = "https://api.apilayer.com/dns_lookup/api/" + CheckFor + "/" + domain;
 
             if (apiProvider == "r")
                 url = "https://dns-lookup2.p.rapidapi.com/Api/" + CheckFor + "/" + domain;
@@ -134,7 +134,7 @@ namespace DnsCheck
             try
             {
                 var domainParser = new DomainParser(new WebTldRuleProvider());
-                var domainName = domainParser.Get(domain);
+                var domainName = domainParser.Parse(domain);
                 return domainName.Domain + "." + domainName.TLD;
             }
             catch (Exception e)
@@ -179,10 +179,10 @@ namespace DnsCheck
             Console.ForegroundColor = ConsoleColor.White;
 
             Console.WriteLine(".-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-.");
-            Console.WriteLine("| You can purchase a subscription via PromptApi/RapidApi to use the API |");
+            Console.WriteLine("| You can purchase a subscription via ApiLayer/RapidApi to use the API  |");
             Console.WriteLine("|                                                                       |");
-            Console.WriteLine("|    www.promptapi.com (recommended)                                    |");
-            Console.WriteLine("!    https://promptapi.com/marketplace/description/dns_lookup-api       !");
+            Console.WriteLine("|    www.apilayer.com (recommended)                                     |");
+            Console.WriteLine("!    https://apilayer.com/marketplace/description/dns_lookup-api        !");
             Console.WriteLine(":                                                                       :");
             Console.WriteLine(":    www.rapidapi.com                                                   :");
             Console.WriteLine(".    https://rapidapi.com/ersinkoc/api/dns-lookup2                      .");

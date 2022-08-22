@@ -35,7 +35,7 @@ namespace DnsCheck
 
                 //Console.WriteLine($"[ API Provider: (P)romptapi.com | (R)apidapi.com | (F)ree {FreeCheckLimit} domains | (E)xit ]");
 
-                Console.WriteLine("(P)romptapi.com      - You need apikey");
+                Console.WriteLine("(A)pilayer.com      - You need apikey");
                 Console.WriteLine("(R)apidapi.com       - You need apikey");
                 if (Premium.CheckType == "PREMIUM")
                 {
@@ -82,14 +82,14 @@ namespace DnsCheck
                 string apiKey = string.Empty;
                 string apiProviderFullName;
 
-                if (apiProvider == "p" || apiProvider == "promptapi" || apiProvider == "promptapi.com" || apiProvider == "r" || apiProvider == "rapidapi" || apiProvider == "rapidapi.com")
+                if (apiProvider == "a" || apiProvider == "apilayer" || apiProvider == "apilayer.com" || apiProvider == "r" || apiProvider == "rapidapi" || apiProvider == "rapidapi.com")
                 {
                 askAPIKey:
 
-                    if (apiProvider == "p" || apiProvider == "promptapi" || apiProvider == "promptapi.com")
+                    if (apiProvider == "a" || apiProvider == "apilayer" || apiProvider == "apilayer.com")
                     {
-                        apiProviderFullName = "promptapi.com";
-                        apiProvider = "p";
+                        apiProviderFullName = "apilayer.com";
+                        apiProvider = "a";
                     }
                     else
                     {
@@ -118,7 +118,7 @@ namespace DnsCheck
                         }
                     } while (key != ConsoleKey.Enter);
 
-                    if (apiKey.Length == 0) goto askAPIKey; // apikey lenght rapidapi 50 - promptapi 30
+                    if (apiKey.Length == 0) goto askAPIKey; // apikey lenght rapidapi 50 - apilayer 30
                 }
                 else if (apiProvider == "f" || apiProvider == "free" || apiProvider.Length == 0)
                 {
@@ -156,9 +156,9 @@ namespace DnsCheck
                 Console.WriteLine();
                 switch (apiProvider)
                 {
-                    case "p":
-                        Console.WriteLine("You're using DNS Lookup API via PromptApi.com ");
-                        apiProviderFullName = "promptapi.com";
+                    case "a":
+                        Console.WriteLine("You're using DNS Lookup API via ApiLayer.com ");
+                        apiProviderFullName = "apilayer.com";
                         ApiCheckLimit = MaxCheckLimit;
                         break;
 
@@ -347,8 +347,8 @@ namespace DnsCheck
 
                             RestRequest request = new RestRequest(Method.GET);
 
-                            // PromptAPI apikey
-                            if (apiProvider == "p")
+                            // ApiLayer apikey
+                            if (apiProvider == "a")
                                 request.AddHeader("apikey", apiKey);
 
                             // RapidApi apikey
@@ -359,7 +359,7 @@ namespace DnsCheck
                             }
 
 
-                            if (apiProvider != "r" && apiProvider != "p")
+                            if (apiProvider != "r" && apiProvider != "a")
                             {
                                 request.AddHeader("ProviderId", "DnsCheck");
                                 request.AddHeader("ApiKey", Premium.FreeApiKey);
@@ -385,16 +385,16 @@ namespace DnsCheck
                                 Helpers.AlertApiLimit("RAPIDAPI.COM: You are not subscribed to this API.");
                                 break;
                             }
-                            // rate limit check for PromptApi
-                            if (apiProvider == "p" && response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+                            // rate limit check for ApiLayer
+                            if (apiProvider == "a" && response.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
                             {
-                                Helpers.AlertApiLimit("PROMPTAPI.COM: You have exceeded your daily/monthly API rate limit.");
+                                Helpers.AlertApiLimit("APILAYER.COM: You have exceeded your daily/monthly API rate limit.");
                                 break;
                             }
 
-                            if (apiProvider == "p" && (int)response.StatusCode == 401)
+                            if (apiProvider == "a" && (int)response.StatusCode == 401)
                             {
-                                Helpers.AlertApiLimit("PROMPTAPI.COM: Invalid authentication credentials");
+                                Helpers.AlertApiLimit("APILAYER.COM: Invalid authentication credentials");
                                 break;
                             }
 
